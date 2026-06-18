@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Time Calculator</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 600px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #111;
+        }
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 12px;
+            border: 1px solid #dcdfe6;
+            border-radius: 6px;
+            font-size: 16px;
+            line-height: 1.5;
+            resize: vertical;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        textarea:focus {
+            border-color: #409eff;
+        }
+        .stats-box {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding: 10px 0;
+            border-top: 1px solid #f0f2f5;
+        }
+        .stat-item {
+            font-size: 15px;
+            color: #666;
+        }
+        .stat-highlight {
+            font-weight: bold;
+            color: #409eff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>⏱️ Reading Time Calculator</h1>
+    
+    <label for="text-input">Paste or type your text below:</label>
+    <textarea id="text-input" placeholder="Start typing here..."></textarea>
+    
+    <div class="stats-box">
+        <div class="stat-item">
+            Words: <span id="word-count" class="stat-highlight">0</span>
+        </div>
+        <div class="stat-item">
+            Estimated Reading Time: <span id="reading-time" class="stat-highlight">0 min</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    const textInput = document.getElementById('text-input');
+    const wordCountSpan = document.getElementById('word-count');
+    const readingTimeSpan = document.getElementById('reading-time');
+
+    // Average adult reading speed (Words Per Minute)
+    const WORDS_PER_MINUTE = 200; 
+
+    textInput.addEventListener('input', () => {
+        const text = textInput.value.trim();
+        
+        // Count words by splitting on spaces, line breaks, and tabs
+        // Filters out empty strings to prevent false word counts from double spaces
+        const words = text === "" ? [] : text.split(/\s+/);
+        const wordCount = words.length;
+
+        // Calculate minutes (rounded up to the nearest integer)
+        const readingTime = Math.ceil(wordCount / WORDS_PER_MINUTE);
+
+        // Update the UI
+        wordCountSpan.textContent = wordCount;
+        readingTimeSpan.textContent = `${readingTime} min`;
+    });
+</script>
+
+</body>
+</html>
